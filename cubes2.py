@@ -34,6 +34,39 @@ cubes = [ \
 'x  ', \
 ]]]
 
+#cubes = [ \
+#[[ \
+#'xx ', \
+#'xx ', \
+#],[ \
+#'   ', \
+#' xx', \
+#]],[[ \
+#'xxx', \
+#'xx ', \
+#'x  ', \
+#]],[[ \
+#'xxx', \
+#'x  ', \
+#'x  ', \
+#],[ \
+#'x  ', \
+#'   ', \
+#'   ', \
+#]],[[ \
+#'x ', \
+#'x ', \
+#],[ \
+#'xx', \
+#'  ', \
+#]],[[ \
+#'xxx', \
+#'  x', \
+#],[ \
+#'x  ', \
+#'   ', \
+#]]]
+
 usedCube = [False for i in range(len(cubes))]
 
 import copy
@@ -148,7 +181,7 @@ def tryPositions(depth = 0):
 			for top in range(6):
 				for rotation in range(4):
 					position = rotate(cubes[cube], top, rotation)
-					if position[0][0][0] == ' ': continue
+					#if position[0][0][0] == ' ': continue
 					if not fits(place, position): continue
 					placeCube(place, position)
 					if tryPositions(depth + 1):

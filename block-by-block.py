@@ -143,6 +143,24 @@ def fits(place, position):
 					return False
 	return True
 
+
+#this method isn't necessary.
+#it just makes the code run faster.
+#by pruning branches that cannot possibly influence the final decision
+
+def createsSimpleHoles():
+	unfilledD, unfilledH, unfilledW = len(unfilled), len(unfilled[0]), len(unfilled[0][0])
+	for z in range(unfilledD):
+		for y in range(unfilledH):
+			for x in range(unfilledW):
+				if unfilled[z][y][x] != ' ' \
+					and (z+1>=unfilledD or unfilled[z+1][y][x] == ' ') and (z-1<0 or unfilled[z-1][y][x] == ' ') \
+					and (y+1>=unfilledH or unfilled[z][y+1][x] == ' ') and (y-1<0 or unfilled[z][y-1][x] == ' ') \
+					and (x+1>=unfilledW or unfilled[z][y][x+1] == ' ') and (x-1<0 or unfilled[z][y][x-1] == ' '):
+						return True
+	return False
+	
+
 def placeCube(place, position, newValue = ' '):
 	d, h, w = len(position), len(position[0]), len(position[0][0])
 
@@ -162,7 +180,14 @@ def unplaceCube(place, position):
 				if position[z][y][x] == 'x':
 					oldStr = unfilled[place[0]+z][place[1]+y]
 					unfilled[place[0]+z][place[1]+y] = oldStr[:place[2]+x] + unfilledOriginal[place[0]+z][place[1]+y][place[2]+x] + oldStr[place[2]+x+1:]
-	
+
+def printPosition(place, position):
+	d, h, w = len(position), len(position[0]), len(position[0][0])
+	print(place)
+	for z in range(d):
+		for y in range(h):
+			print(''.join(position[z][y]))
+		print('-----------------')
 
 import sys
 
@@ -184,9 +209,10 @@ def tryPositions(depth = 0):
 					#if position[0][0][0] == ' ': continue
 					if not fits(place, position): continue
 					placeCube(place, position)
-					if tryPositions(depth + 1):
-						print(place, position)
-						return True
+					if not createsSimpleHoles():
+						if tryPositions(depth + 1):
+							printPosition(place, position)
+							return True
 					unplaceCube(place, position)
 			usedCube[cube] = False
 

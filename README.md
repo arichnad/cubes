@@ -1,6 +1,6 @@
 
-Solver for five puzzels
-========================
+Solver for six puzzels
+======================
 
 * instant-insanity.py: [instant insanity](http://en.wikipedia.org/wiki/Instant_Insanity)
 * block-by-block.py: [block by block](http://www.thinkfun.com/blockbyblock) puzzle, and a second [polycube](http://en.wikipedia.org/wiki/Polycube) / [packing problem](http://en.wikipedia.org/wiki/Packing_problems) that is commented out in the code

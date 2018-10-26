@@ -21,11 +21,13 @@ for rowNumber, row in enumerate(board):
 queue=[(startPosition, [])]
 seen=set()
 
-def append(queue, seen, newState, moves):
+def append(queue, seen, newState, moves, newMove):
 	if newState in seen: return
 	x, y, dx, dy, dz = newState
 	if x<0 or y<0 or x+dx>=len(board[0]) or y+dy>=len(board): return
 	if board[y][x]=='-' or board[y+dy][x+dx] == '-': return
+	#the reason we wait to add to moves until here is for performance reasons:
+	moves = moves + [newMove]
 	if newState == endPosition:
 		print(moves)
 		return True
@@ -35,9 +37,9 @@ def append(queue, seen, newState, moves):
 while len(queue) > 0:
 	(x, y, dx, dy, dz), moves = queue.pop(0)
 
-	if append(queue, seen, (x+(dx*2+dy+dz), y, dz, dy, dx), moves + ['right']) or \
-		append(queue, seen, (x-(dz*2+dy+dx), y, dz, dy, dx), moves + ['left']) or \
-		append(queue, seen, (x, y+(dy*2+dx+dz), dx, dz, dy), moves + ['down']) or \
-		append(queue, seen, (x, y-(dz*2+dy+dx), dx, dz, dy), moves + ['up']):
+	if append(queue, seen, (x+(dx*2+dy+dz), y, dz, dy, dx), moves, 'right') or \
+		append(queue, seen, (x-(dz*2+dy+dx), y, dz, dy, dx), moves, 'left') or \
+		append(queue, seen, (x, y+(dy*2+dx+dz), dx, dz, dy), moves, 'down') or \
+		append(queue, seen, (x, y-(dz*2+dy+dx), dx, dz, dy), moves, 'up'):
 		break
 

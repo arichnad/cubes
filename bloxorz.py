@@ -8,7 +8,8 @@ board=[
 '-----ooToo',
 '------ooo-',
 ]
-#board=['o'*400]*400
+#board=['o'*550]*550
+#board[0]='S'+board[0][1:-1]+'T'
 #board[0]='S'+board[0][1:]
 #board[-1]=board[-1][:-1]+'T'
 
